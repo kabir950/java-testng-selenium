@@ -8,7 +8,7 @@ steps:
 - task: JavaToolInstaller@0
   inputs:
     versionSpec: '11'
-    jdkArchitecture: 'x64'
+    jdkArchitectureOption: 'x64'
   displayName: 'Install Java 11'
 
 - script: |
@@ -21,3 +21,4 @@ steps:
     echo Running tests on LambdaTest...
     mvn test -D suite=single.xml
   displayName: 'Run LambdaTest Suite'
+
