@@ -5,20 +5,15 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- task: JavaToolInstaller@0
-  inputs:
-    versionSpec: '11'
-    jdkArchitectureOption: 'x64'
-  displayName: 'Install Java 11'
+- script: java -version
+  displayName: 'Check Java version'
 
-- script: |
-    echo Installing Maven...
-    sudo apt-get update
-    sudo apt-get install -y maven
-  displayName: 'Install Maven'
+- script: mvn -version
+  displayName: 'Check Maven version'
 
 - script: |
     echo Running tests on LambdaTest...
     mvn test -D suite=single.xml
   displayName: 'Run LambdaTest Suite'
+
 
