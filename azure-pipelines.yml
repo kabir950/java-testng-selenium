@@ -5,10 +5,11 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- task: UseJava@1
+- task: JavaToolInstaller@0
   inputs:
     versionSpec: '11'
     jdkArchitecture: 'x64'
+  displayName: 'Install Java 11'
 
 - script: |
     echo Installing Maven...
