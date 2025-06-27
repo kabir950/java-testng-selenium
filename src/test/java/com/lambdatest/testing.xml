@@ -1,8 +1,8 @@
-<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
-<suite name="LambdaTestSuite" parallel="false">
-  <test name="LambdaTest">
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="RunTests">
+  <test name="Sample Test">
     <classes>
-      <class name="tests.SeleniumTest" />
+      <class name="tests.SeleniumTest"/>
     </classes>
   </test>
 </suite>
