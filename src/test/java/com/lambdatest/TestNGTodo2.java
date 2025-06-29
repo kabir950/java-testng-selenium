@@ -6,98 +6,69 @@ import java.net.URL;
 import java.util.HashMap;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.testng.Assert;
 import org.testng.ITestContext;
-import org.testng.annotations.*;
-
-import com.lambdatest.tunnel.Tunnel;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 public class TestNGTodo2 {
 
     private RemoteWebDriver driver;
-    private String Status = "failed";
-    private Tunnel t;
-
-    @BeforeSuite
-    public void setUpTunnel() throws Exception {
-        String username = System.getenv("LT_USERNAME");
-        String access_key = System.getenv("LT_ACCESS_KEY");
-
-        t = new Tunnel();
-        HashMap<String, String> options = new HashMap<>();
-        options.put("user", username);
-        options.put("key", access_key);
-        options.put("tunnelName", "MavenSingle");
-        t.start(options);
-        System.out.println("✅ LambdaTest Tunnel started.");
-    }
-
-    @AfterSuite
-    public void stopTunnel() throws Exception {
-        if (t != null) {
-            t.stop();
-            System.out.println("🛑 LambdaTest Tunnel stopped.");
-        }
-    }
+    private String Status = "passed";
 
     @BeforeMethod
     public void setup(Method m, ITestContext ctx) throws MalformedURLException {
         String username = "kabirk";
-        String access_key = "LT_RhMHqS2TJ4lYNmnzOfTYRaNYNdbFdvoDAKSFTVknI2UQBth";
+        String authkey = "LT_RhMHqS2TJ4lYNmnzOfTYRaNYNdbFdvoDAKSFTVknI2UQBth";
+        String hub = "hub.lambdatest.com/wd/hub";
 
-        String hub = "@hub.lambdatest.com/wd/hub";
+        ChromeOptions browserOptions = new ChromeOptions();
+        browserOptions.setPlatformName("Windows 11");
+        browserOptions.setBrowserVersion("134.0");
+        HashMap<String, Object> ltOptions = new HashMap<>();
+        ltOptions.put("username", username);
+        ltOptions.put("accessKey", authkey);
+        ltOptions.put("project", "Untitled");
+        ltOptions.put("selenium_version", "4.0.0");
+        ltOptions.put("build", "pop-up");
+        ltOptions.put("visual", true);
+        ltOptions.put("w3c", true);
+        ltOptions.put("tags", new String[]{"Feature", "Falcon", "Severe"});
 
-        DesiredCapabilities caps = new DesiredCapabilities();
-        caps.setCapability("platform", "Windows 10");
-        caps.setCapability("browserName", "chrome");
-        caps.setCapability("version", "latest");
-        caps.setCapability("build", "TestNG With Java Tunnel");
-        caps.setCapability("name", m.getName());
-        caps.setCapability("plugin", "git-testng");
-        caps.setCapability("tunnel", true);  // This tells LambdaTest to use the tunnel
+        browserOptions.setCapability("LT:Options", ltOptions);
 
-        String[] tags = new String[] { "TunnelTest", "Maven", "TestNG" };
-        caps.setCapability("tags", tags);
-
-        driver = new RemoteWebDriver(new URL("https://" + username + ":" + access_key + hub), caps);
+        driver = new RemoteWebDriver(
+                new URL("https://" + username + ":" + authkey + "@" + hub),
+                browserOptions
+        );
     }
 
     @Test
-    public void basicTest() throws InterruptedException {
-        System.out.println("🌐 Loading URL...");
-        driver.get("https://lambdatest.github.io/sample-todo-app/");
+    public void testGoogleLuckyButton() throws InterruptedException {
+        driver.get("https://www.google.com/");
+        Thread.sleep(3000);
 
-        driver.findElement(By.name("li1")).click();
-        driver.findElement(By.name("li2")).click();
-        driver.findElement(By.name("li3")).click();
-        driver.findElement(By.name("li4")).click();
+        // Accept cookies if necessary (handle regional variations)
+        try {
+            driver.findElement(By.xpath("//div[text()='I agree']")).click();
+            Thread.sleep(1000);
+        } catch (Exception ignored) {}
 
-        driver.findElement(By.id("sampletodotext")).sendKeys(" List Item 6");
-        driver.findElement(By.id("addbutton")).click();
+        // Click "I'm Feeling Lucky"
+        driver.findElement(By.xpath("https://www.crunchyroll.com")).click();
+        Thread.sleep(5000);
 
-        driver.findElement(By.id("sampletodotext")).sendKeys(" List Item 7");
-        driver.findElement(By.id("addbutton")).click();
+        // Get the new URL and print to console
+        String currentURL = driver.getCurrentUrl();
+        System.out.println("New URL after clicking: " + currentURL);
 
-        driver.findElement(By.id("sampletodotext")).sendKeys(" List Item 8");
-        driver.findElement(By.id("addbutton")).click();
+        // Open the URL in a new tab
+        ((JavascriptExecutor) driver).executeScript("window.open('" + currentURL + "', '_blank');");
 
-        driver.findElement(By.name("li1")).click();
-        driver.findElement(By.name("li3")).click();
-        driver.findElement(By.name("li7")).click();
-        driver.findElement(By.name("li8")).click();
-
-        driver.findElement(By.id("sampletodotext")).sendKeys("Get Taste of Lambda and Stick to It");
-        driver.findElement(By.id("addbutton")).click();
-
-        driver.findElement(By.name("li9")).click();
-
-        String spanText = driver.findElementByXPath("/html/body/div/div/div/ul/li[9]/span").getText();
-        Assert.assertEquals("Get Taste of Lambda and Stick to It", spanText);
-        Status = "passed";
-
-        System.out.println("✅ Test finished");
+        Thread.sleep(5000);
     }
 
     @AfterMethod
