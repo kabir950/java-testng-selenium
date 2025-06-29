@@ -14,7 +14,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.openqa.selenium.chrome.ChromeOptions;
 
-public class TestNGTodo1 {
+public class TestNGTodo2 {
 
     private RemoteWebDriver driver;
     private String Status = "passed";
