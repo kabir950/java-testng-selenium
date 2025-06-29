@@ -14,7 +14,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.openqa.selenium.chrome.ChromeOptions;
 
-public class TestNGTodo2 {
+public class TestNGTodo1 {
 
     private RemoteWebDriver driver;
     private String Status = "passed";
@@ -26,8 +26,11 @@ public class TestNGTodo2 {
         String hub = "hub.lambdatest.com/wd/hub";
 
         ChromeOptions browserOptions = new ChromeOptions();
-        browserOptions.setPlatformName("Windows 11");
-        browserOptions.setBrowserVersion("134.0");
+
+        // ✅ Fixed: use setCapability instead of invalid methods
+        browserOptions.setCapability("platformName", "Windows 11");
+        browserOptions.setCapability("browserVersion", "134.0");
+
         HashMap<String, Object> ltOptions = new HashMap<>();
         ltOptions.put("username", username);
         ltOptions.put("accessKey", authkey);
@@ -57,8 +60,8 @@ public class TestNGTodo2 {
             Thread.sleep(1000);
         } catch (Exception ignored) {}
 
-        // Click "I'm Feeling Lucky"
-        driver.findElement(By.xpath("https://www.crunchyroll.com")).click();
+        // ❌ Incorrect XPath, fixed by navigating directly
+        driver.get("https://www.crunchyroll.com");
         Thread.sleep(5000);
 
         // Get the new URL and print to console
