@@ -6,6 +6,8 @@ import java.net.URL;
 import java.util.HashMap;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.safari.SafariOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.ITestContext;
@@ -48,19 +50,19 @@ public class TestNGTodo2 {
 
         Thread.sleep(3000);
 
-       WebElement usernameField = driver.findElement(By.xpath("//*[@id='username']"));
+        WebElement usernameField = driver.findElement(By.xpath("//*[@id='username']"));
 
-JavascriptExecutor js = (JavascriptExecutor) driver;
-js.executeScript("arguments[0].value='ankit';", usernameField);
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].value='ankit';", usernameField);
 
-    Thread.sleep(3000);
+        Thread.sleep(3000);
 
-WebElement passwordField = driver.findElement(By.xpath("//*[@id='password']"));
+        WebElement passwordField = driver.findElement(By.xpath("//*[@id='password']"));
 
-JavascriptExecutor js1 = (JavascriptExecutor) driver;
-js1.executeScript("arguments[0].value='45689';", passwordField);
+        JavascriptExecutor js1 = (JavascriptExecutor) driver;
+        js1.executeScript("arguments[0].value='45689';", passwordField);
 
-    Thread.sleep(3000);
+        Thread.sleep(3000);
         System.out.println("Current URL: " + driver.getCurrentUrl());
 
         Status = "passed";
@@ -71,6 +73,4 @@ js1.executeScript("arguments[0].value='45689';", passwordField);
     public void tearDown() {
         driver.executeScript("lambdatest_executor: {\"action\": \"stepcontext\", \"arguments\": {\"data\": \"Adding Test Result and Closing Browser\", \"level\": \"info\"}}");
         driver.executeScript("lambda-status=" + Status);
-        driver.quit();
-    }
-}
+        driver.quit()
