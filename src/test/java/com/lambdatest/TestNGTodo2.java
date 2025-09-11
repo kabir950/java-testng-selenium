@@ -51,18 +51,17 @@ public class TestNGTodo2 {
         Thread.sleep(3000);
 
         WebElement usernameField = driver.findElement(By.xpath("//*[@id='username']"));
-
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].value='ankit';", usernameField);
 
         Thread.sleep(3000);
 
         WebElement passwordField = driver.findElement(By.xpath("//*[@id='password']"));
-
         JavascriptExecutor js1 = (JavascriptExecutor) driver;
         js1.executeScript("arguments[0].value='45689';", passwordField);
 
         Thread.sleep(3000);
+
         System.out.println("Current URL: " + driver.getCurrentUrl());
 
         Status = "passed";
@@ -71,6 +70,10 @@ public class TestNGTodo2 {
 
     @AfterMethod
     public void tearDown() {
-        driver.executeScript("lambdatest_executor: {\"action\": \"stepcontext\", \"arguments\": {\"data\": \"Adding Test Result and Closing Browser\", \"level\": \"info\"}}");
+        driver.executeScript(
+            "lambdatest_executor: {\"action\": \"stepcontext\", \"arguments\": {\"data\": \"Adding Test Result and Closing Browser\", \"level\": \"info\"}}"
+        );
         driver.executeScript("lambda-status=" + Status);
-        driver.quit()}
+        driver.quit();
+    }
+}
