@@ -1,16 +1,12 @@
 package com.lambdatest;
 
-import java.io.File;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.safari.SafariOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.ITestContext;
 import org.testng.annotations.AfterMethod;
@@ -28,14 +24,14 @@ public class TestNGTodo2 {
         String authkey = "LT_OnEL30AtoPH0BkcY83K0VnpQOcfFpX71axsfQgHGLhvNfUP";
         String hub = "@hub.lambdatest.com/wd/hub";
 
-        ChromeOptions browserOptions = new ChromeOptions();
+        SafariOptions browserOptions = new SafariOptions();
         HashMap<String, Object> ltOptions = new HashMap<>();
 
         ltOptions.put("username", username);
         ltOptions.put("accessKey", authkey);
-        ltOptions.put("platformName", "Windows 10");
-        ltOptions.put("browserName", "Chrome");
-        ltOptions.put("browserVersion", "139.0");
+        ltOptions.put("platformName", "macOS Sonoma");
+        ltOptions.put("browserName", "Safari");
+        ltOptions.put("browserVersion", "latest");
         ltOptions.put("build", "Build");
         ltOptions.put("name", m.getName() + " - " + this.getClass().getSimpleName());
         ltOptions.put("w3c", true);
@@ -45,7 +41,6 @@ public class TestNGTodo2 {
         driver = new RemoteWebDriver(new URL("https://" + username + ":" + authkey + hub), browserOptions);
     }
 
-    // Run this test multiple times if needed
     @Test(invocationCount = 1)
     public void basicTest() throws InterruptedException {
         System.out.println("Loading Url for iteration...");
@@ -58,7 +53,6 @@ public class TestNGTodo2 {
         Thread.sleep(3000);
 
         driver.findElement(By.xpath("//*[@id=\"password\"]")).sendKeys("1234");
-
 
         System.out.println("Current URL: " + driver.getCurrentUrl());
 
@@ -73,8 +67,3 @@ public class TestNGTodo2 {
         driver.quit();
     }
 }
-
-
-
-
-
