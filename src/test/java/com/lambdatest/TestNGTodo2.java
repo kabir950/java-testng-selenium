@@ -73,4 +73,4 @@ public class TestNGTodo2 {
     public void tearDown() {
         driver.executeScript("lambdatest_executor: {\"action\": \"stepcontext\", \"arguments\": {\"data\": \"Adding Test Result and Closing Browser\", \"level\": \"info\"}}");
         driver.executeScript("lambda-status=" + Status);
-        driver.quit()
+        driver.quit()}
