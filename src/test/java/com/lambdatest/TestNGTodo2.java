@@ -48,12 +48,19 @@ public class TestNGTodo2 {
 
         Thread.sleep(3000);
 
-        driver.findElement(By.xpath("//*[@id='username']")).sendKeys("ankit");
+       WebElement usernameField = driver.findElement(By.xpath("//*[@id='username']"));
 
-        Thread.sleep(3000);
+JavascriptExecutor js = (JavascriptExecutor) driver;
+js.executeScript("arguments[0].value='ankit';", usernameField);
 
-        driver.findElement(By.xpath("//*[@id=\"password\"]")).sendKeys("1234");
+    Thread.sleep(3000);
 
+WebElement passwordField = driver.findElement(By.xpath("//*[@id='password']"));
+
+JavascriptExecutor js1 = (JavascriptExecutor) driver;
+js1.executeScript("arguments[0].value='45689';", passwordField);
+
+    Thread.sleep(3000);
         System.out.println("Current URL: " + driver.getCurrentUrl());
 
         Status = "passed";
